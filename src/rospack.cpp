@@ -234,7 +234,8 @@ Rosstackage::Rosstackage(const std::string& manifest_name,
         cache_name_(cache_name),
         crawled_(false),
         name_(name),
-        tag_(tag)
+        tag_(tag),
+        quiet_(false)
 {
 }
 
@@ -1581,7 +1582,7 @@ Rosstackage::computeDeps(Stackage* stackage, bool ignore_errors, bool ignore_mis
     if(ignore_errors)
       return;
     else
-      throw e;
+      throw;
   }
   if (!stackage->is_wet_package_)
   {
@@ -2199,10 +2200,12 @@ Rosstackage::expandExportString(Stackage* stackage,
     // Close the subprocess, checking exit status
     if(pclose(p) != 0)
     {
+      /*
       std::string errmsg = 
               std::string("got non-zero exit status from executing backquote expression ") +
               cmd + " in " +
               stackage->manifest_path_;
+      */
       return false;
     }
     else
